@@ -14,8 +14,9 @@ jobs:
     - name: Print simple Python message
       run: |
         python -c "print('Hallo Roger 👋')"
+        python -c "import os; print(os.environ.get('DB_NAME')=='cac_db')"
+        python -c "import os; print(os.environ.get('DB_USER')=='cac_db_admin@cacsqlserver')"
         python -c "import os; print(os.environ.get('DB_HOST')=='cacsqlserver.database.windows.net')"
-        python -c "import os; print(os.environ.get('DB_PASSWORD')=='LC_G7q!mP4zR@t2')"
       env:
         DB_NAME: ${{ secrets.DB_NAME }}
         DB_USER: ${{ secrets.DB_USER }}
