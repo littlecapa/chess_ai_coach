@@ -73,7 +73,7 @@ jobs:
         pip install --no-cache-dir -r requirements.txt
 
     - name: Test Database Connection
-      run: python azure_iaac/test_connection.py
+      run: python azure_iaac/test_db_connection.py
       env:
         DB_NAME: ${{ secrets.DB_NAME }}
         DB_USER: ${{ secrets.DB_USER }}
