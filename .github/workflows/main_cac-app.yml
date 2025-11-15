@@ -11,11 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Test Database Connection
-      run: |
-        python -c "import pyodbc; print(pyodbc.drivers())"
-      env:
-        DB_HOST: ${{ secrets.DB_HOST }}
+    
     - name: Debug DB connection settings
       run: |
         if [ "$DB_NAME" = "cac_db" ]; then
@@ -62,6 +58,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install --no-cache-dir -r requirements.txt
 
+    - name: Test Database Connection
+      run: |
+        python -c "import pyodbc; print(pyodbc.drivers())"
+      env:
+        DB_HOST: ${{ secrets.DB_HOST }}
+        
     - name: Run Django migrations
       timeout-minutes: 5
       env:
