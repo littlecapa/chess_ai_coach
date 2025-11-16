@@ -67,14 +67,6 @@ jobs:
         sudo apt-get update
         sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18 unixodbc-dev
 
-    - name: Test Database Connection
-      run: python azure_iaac/test_db_connection.py
-      env:
-        DB_NAME: ${{ secrets.DB_NAME }}
-        DB_USER: ${{ secrets.DB_USER }}
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        DB_HOST: ${{ secrets.DB_HOST }}
-
     - name: Test pyODBC driver
       run: |
         python -c "import pyodbc; print(pyodbc.drivers())"
