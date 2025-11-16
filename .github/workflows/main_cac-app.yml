@@ -26,30 +26,6 @@ jobs:
     - name: DNS Test
       run: nslookup cacsqlserver.database.windows.net
 
-    - name: Debug DB connection settings
-      run: |
-        if [ "$DB_NAME" = "cac_db" ]; then
-          echo "✅ DB_NAME is correct: $DB_NAME"
-        else
-          echo "❌ DB_NAME is incorrect: $DB_NAME"
-        fi
-
-        if [ "$DB_HOST" = "cacsqlserver.database.windows.net" ]; then
-          echo "✅ DB_HOST is correct: $DB_HOST"
-        else
-          echo "❌ DB_HOST is incorrect: $DB_HOST"
-        fi
-
-        if [ "$DB_USER" = "cac_db_admin@cacsqlserver" ]; then
-          echo "✅ DB_USER is correct: $DB_USER"
-        else
-          echo "❌ DB_USER is incorrect: $DB_USER"
-        fi
-      env:
-        DB_NAME: ${{ secrets.DB_NAME }}
-        DB_HOST: ${{ secrets.DB_HOST }}
-        DB_USER: ${{ secrets.DB_USER }}
-
     - name: Checkout code
       uses: actions/checkout@v3
 
@@ -66,6 +42,11 @@ jobs:
         curl https://packages.microsoft.com/config/ubuntu/22.04/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
         sudo apt-get update
         sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18 unixodbc-dev
+
+    - name: Install pyodbc for test
+      run: |
+        python -m pip install --upgrade pip
+        pip install pyodbc
 
     - name: Test pyODBC driver
       run: |
