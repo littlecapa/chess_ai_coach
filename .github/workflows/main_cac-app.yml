@@ -43,17 +43,18 @@ jobs:
         sudo apt-get update
         sudo ACCEPT_EULA=Y apt-get install -y msodbcsql18 unixodbc-dev
 
-    - name: Install pyodbc for test
+    - name: Install pyodbc and dependencies for test
       run: |
         python -m pip install --upgrade pip
         pip install pyodbc
+        pip install --no-cache-dir -r requirements.txt
 
     - name: Test pyODBC driver
       run: |
         python -c "import pyodbc; print(pyodbc.drivers())"
       env:
         DB_HOST: ${{ secrets.DB_HOST }}
-
+        
     - name: Run Django migrations
       run: python manage.py migrate
       env:
