@@ -114,6 +114,8 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: Deploy using Azure CLI
-      run: |
-        az webapp deploy --name cac-app --resource-group RG_CAC --src-path .
+    - name: Zip application
+      run: zip -r app.zip .
+      
+    - name: Deploy to Azure
+      run: az webapp deploy --name cac-app --resource-group RG_CAC --src-path app.zip --type zip
